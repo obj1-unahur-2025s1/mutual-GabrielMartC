@@ -1,0 +1,55 @@
+import mutual.*
+
+describe "group of tests for mutual, socios" {
+  const trek1 = new SalidaTrekking(kilometros = 100, diasDeSol = 130, idiomas=#{"ingles"})
+  const trek2 = new SalidaTrekking(kilometros = 50, diasDeSol = 240, idiomas=#{"ingles"})
+  const trek3 = new SalidaTrekking(kilometros = 250, diasDeSol = 130, idiomas=#{"ingles"})
+  const playa1 = new ViajePlaya(largo=1000, idiomas=#{"jeringoso"})
+  const playa2 = new ViajePlaya(largo=2000, idiomas=#{"esperanto"})
+
+  const gim1 = new ClaseGimnasia()
+
+  const roque = new Socio(cantMaxActivid = 2)
+
+  method initialize(){
+    roque.registrarActividad(playa1)
+    roque.registrarActividad(playa2)
+    // roque.registrarActividad(gim1)
+  }
+
+  test "trek1 lleva 2 dias" {
+    assert.equals(2, trek1.cantDias())
+  }
+
+  test "trek1 implica esfuerzo" {
+    assert.that(trek1.implicaEsfuerzo() )
+  }
+
+  test "trek1 no sirve para broncearse" {
+    assert.notThat(trek1.sirveParaBroncearce())
+  }
+
+  test "trek2 lleva 1 dias" {
+    assert.equals(1, trek2.cantDias())
+  }
+
+  test "trek3 lleva 5 dias" {
+    assert.equals(5, trek3.cantDias())
+  }
+
+  test "roque es adorador del sol" {
+    assert.that(roque.esAdoradorDelSol())
+  }
+
+  test "las act esforzadas son solamente el viaje de 2000 mts de playa" {
+    assert.equals([playa2], roque.actividadesEsforzadas())
+  }
+
+  test "roque no puede hacer gim1 porque ya hizo sus actividades maximas" {
+    assert.throwsExceptionWithMessage("El socio alcanzo el maximo de actividades", {roque.registrarActividad(gim1)})
+  }
+
+
+
+
+}
